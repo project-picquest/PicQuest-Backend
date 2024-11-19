@@ -26,7 +26,7 @@ public class UserController {
         User loginUser = us.login(form);
         if (loginUser != null) {
             session.setAttribute("userInfo", loginUser);
-            return ResponseEntity.status(HttpStatus.OK).body("login Complete");
+            return ResponseEntity.status(HttpStatus.OK).body(loginUser);
         } else {
             return ResponseEntity.status(HttpStatus.OK).body("login Failed");
         }
