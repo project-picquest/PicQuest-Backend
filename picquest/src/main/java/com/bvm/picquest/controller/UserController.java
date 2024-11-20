@@ -4,6 +4,7 @@ import com.bvm.picquest.dto.User;
 import com.bvm.picquest.dto.UserLoginForm;
 import com.bvm.picquest.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import jakarta.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -22,7 +23,7 @@ public class UserController {
 
     @Operation(summary = "유저 로그인 메소드", description = "description")
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody UserLoginForm form, HttpSession session) {
+    public ResponseEntity<?> login(@io.swagger.v3.oas.annotations.parameters.RequestBody(description = "로그인 시 입력할 유저 아이디와 비밀번호") @RequestBody UserLoginForm form, HttpSession session) {
         User loginUser = us.login(form);
         if (loginUser != null) {
             session.setAttribute("userInfo", loginUser);
