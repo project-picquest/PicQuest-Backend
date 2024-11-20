@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bvm.picquest.mapper.AttractionMapper">
+    <select id="findByTitle" resultType="Attraction">
+        select * from attractions
+        <where>
+            content_type_id not in (38, 39)
+            <if test="title != null">
+                and title like CONCAT("%", #{title}, "%")
+            </if>
+        </where>
+        limit 9 offset #{offset}
+    </select>
+</mapper>
