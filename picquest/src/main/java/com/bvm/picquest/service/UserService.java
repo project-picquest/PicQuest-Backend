@@ -1,6 +1,7 @@
 package com.bvm.picquest.service;
 
 import com.bvm.picquest.dto.User;
+import com.bvm.picquest.dto.UserJoinForm;
 import com.bvm.picquest.dto.UserLoginForm;
 import com.bvm.picquest.mapper.UserMapper;
 import lombok.AllArgsConstructor;
@@ -21,5 +22,9 @@ public class UserService {
         } else {
             return null;
         }
+    }
+
+    public int join(UserJoinForm form) {
+        return um.insert(form);
     }
 }

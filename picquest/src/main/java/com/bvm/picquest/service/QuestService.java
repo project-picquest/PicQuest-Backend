@@ -1,9 +1,10 @@
 package com.bvm.picquest.service;
 
 import com.bvm.picquest.config.S3Config;
-import com.bvm.picquest.dto.QuestTransferForm;
-import com.bvm.picquest.dto.User;
+import com.bvm.picquest.dto.*;
+import com.bvm.picquest.mapper.CompleteQuestMapper;
 import com.bvm.picquest.mapper.QuestMapper;
+import com.bvm.picquest.mapper.UserMapper;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -31,13 +32,8 @@ import java.util.UUID;
 public class QuestService {
 
     private final QuestMapper qm;
+    private final CompleteQuestMapper cqm;
     private final S3Client s3Client;
-
-    @Value("${cloud.aws.s3.credentials.access-key}")
-    private String accessKey;
-
-    @Value("${cloud.aws.s3.credentials.secret-key}")
-    private String secretKey;
 
     @Value("${cloud.aws.region.static}")
     private String region;
@@ -49,14 +45,38 @@ public class QuestService {
         return qm.findQuestTransferFormByDate(email, Date.valueOf(LocalDate.now()));
     }
 
-    public String uploadImageToS3(MultipartFile image) throws IOException {
+    public List<QuestTransferForm> todaysQuestList() {
+        return qm.findByDate(Date.valueOf(LocalDate.now()));
+    }
+
+    public String upsertImageLink(QuestSubmitForm form, MultipartFile image) throws IOException {
+        String imgLink = uploadImageToS3(image);
+        System.out.println(imgLink);
+        CompleteQuest completeQuestInfo = new CompleteQuest(form);
+        completeQuestInfo.setImg(imgLink);
+
+        if (cqm.findByEmailAndQuestId(completeQuestInfo) != 1) {
+            cqm.insert(completeQuestInfo);
+        } else {
+            cqm.update(completeQuestInfo);
+        }
+
+        return imgLink;
+    }
+
+    public Quest findTodaysQuestByIndex(int index) {
+        index -= 1;
+        return qm.findTodaysQuestByIndex(index);
+    }
+
+    private String uploadImageToS3(MultipartFile image) throws IOException {
         String fileName = UUID.randomUUID().toString().concat(image.getOriginalFilename());
         InputStream inputStream = image.getInputStream();
         PutObjectRequest objectRequest = PutObjectRequest.builder()
-                                                         .key(fileName)
-                                                         .bucket(bucket)
-                                                         .contentType(image.getContentType())
-                                                         .build();
+                .key(fileName)
+                .bucket(bucket)
+                .contentType(image.getContentType())
+                .build();
 
         try {
             s3Client.putObject(objectRequest, RequestBody.fromInputStream(inputStream, image.getSize()));

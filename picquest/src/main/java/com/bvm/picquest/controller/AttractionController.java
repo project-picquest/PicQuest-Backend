@@ -5,11 +5,9 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+@CrossOrigin("*")
 @RestController
 @AllArgsConstructor
 @RequestMapping("/attractions")
@@ -27,5 +25,10 @@ public class AttractionController {
     @GetMapping("/{title}")
     public ResponseEntity<?> findByTitle(@Parameter(description = "검색창 내 검색어") @PathVariable String title) {
         return ResponseEntity.ok(as.findByTitle(title));
+    }
+
+    @GetMapping("/detail/{no}")
+    public ResponseEntity<?> detailAttraction(@PathVariable int no) {
+        return ResponseEntity.ok(as.attractionDetail(no));
     }
 }

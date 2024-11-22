@@ -11,4 +11,16 @@
         </where>
         limit 9 offset #{offset}
     </select>
+    <select id="findByNo" resultType="AttractionTransferForm">
+        select title, first_image1, addr1
+        from attractions
+        <where>
+            no=#{no};
+        </where>
+    </select>
+    <select id="findImgsByNo">
+        select b.img
+        from attractions a join (select * from additional_photo where attraction_no=#{no}) b
+        on a.no = b.attraction_no
+    </select>
 </mapper>
