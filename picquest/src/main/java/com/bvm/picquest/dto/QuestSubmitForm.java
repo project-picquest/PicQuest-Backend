@@ -7,5 +7,6 @@ import org.springframework.web.multipart.MultipartFile;
 public class QuestSubmitForm {
     private String userEmail;
     private Long questId;
+    private String title;
     private int score;
 }

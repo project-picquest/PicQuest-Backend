@@ -46,6 +46,13 @@ public class UserController {
     @GetMapping("/logout")
     public ResponseEntity<?> logout(HttpSession session) {
         session.invalidate();
-        return  ResponseEntity.status(HttpStatus.OK).body("logout complete!");
+        return ResponseEntity.status(HttpStatus.OK).body("logout complete!");
+    }
+
+    @Operation(summary = "유저 프로필 상세 페이지")
+    @PostMapping("/profile/{email}")
+    public ResponseEntity<?> viewProfile(@PathVariable String email, @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "이메일만 제대로 입력되면 됨") @RequestBody(required = false) User user) {
+        String viewerEmail = user == null ? "" : user.getEmail();
+        return ResponseEntity.ok(us.viewProfile(email, viewerEmail));
     }
 }

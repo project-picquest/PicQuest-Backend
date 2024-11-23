@@ -10,4 +10,18 @@
     <insert id="insert">
         insert into user values (#{email}, #{password}, #{nickname}, 0)
     </insert>
+    <select id="findUserProfile" resultType="ProfileForm">
+        select nickname, case when email=#{viewerEmail} then true else false end as isMyself, score as userScore
+        from user
+        <where>
+            email=#{email}
+        </where>
+    </select>
+    <select id="findUsersQuest" resultType="ProfileQuestForm">
+        SELECT b.img, b.title, b.score as questScore
+        FROM quest a join (select * from complete_quest where user_email=#{email}) b
+        on a.id = b.quest_id
+        order by date desc
+        limit 3;
+    </select>
 </mapper>
