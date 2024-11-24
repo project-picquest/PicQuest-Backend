@@ -23,7 +23,7 @@ public class AttractionController {
 
     @Operation(summary = "검색어에 맞는 여행지 반환(상위 9개 반환)")
     @GetMapping("/{title}")
-    public ResponseEntity<?> findByTitle(@Parameter(description = "검색창 내 검색어") @PathVariable String title) {
+    public ResponseEntity<?> findByTitle(@Parameter(description = "검색창 내 검색어") @PathVariable(required = false) String title) {
         return ResponseEntity.ok(as.findByTitle(title));
     }
 
