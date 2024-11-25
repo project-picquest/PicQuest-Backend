@@ -25,7 +25,10 @@
         limit 3;
     </select>
     <update id="update">
-        update user set password=#{password}, nickname=#{nickname}, profile_image=#{profileImage}
+        update user set password=#{password}, nickname=#{nickname}
+        <if test="profileImage != null">
+            , profile_image=#{profileImage}
+        </if>
         <where>
             email=#{email}
         </where>

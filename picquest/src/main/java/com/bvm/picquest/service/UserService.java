@@ -52,8 +52,10 @@ public class UserService {
     }
 
     public int updateProfile(UserProfileUpdateForm form, MultipartFile image) throws IOException {
-        String fileName = uploadImageToS3(image);
-        form.setProfileImage(fileName);
+        if (image != null) {
+            String fileName = uploadImageToS3(image);
+            form.setProfileImage(fileName);
+        }
         return um.update(form);
     }
 

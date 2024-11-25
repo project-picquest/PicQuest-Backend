@@ -12,7 +12,7 @@
         limit 9 offset #{offset}
     </select>
     <select id="findByNo" resultType="AttractionTransferForm">
-        select title, first_image1, addr1
+        select title, first_image1, addr1, latitude, longitude
         from attractions
         <where>
             no=#{no};

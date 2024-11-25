@@ -60,7 +60,7 @@ public class UserController {
 
     @Operation(summary = "프로필 수정")
     @PostMapping(value = "/update", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<?> updateProfile(@RequestPart UserProfileUpdateForm form, @RequestPart MultipartFile image) throws IOException {
+    public ResponseEntity<?> updateProfile(@RequestPart UserProfileUpdateForm form, @RequestPart(required = false) MultipartFile image) throws IOException {
         return us.updateProfile(form, image) == 1 ? ResponseEntity.ok("update complete!") : ResponseEntity.ok("update Failed");
     }
 }
