@@ -8,10 +8,10 @@
         </where>
     </select>
     <insert id="insert">
-        insert into user values (#{email}, #{password}, #{nickname}, 0)
+        insert into user (email, password, nickname, score) values (#{email}, #{password}, #{nickname}, 0)
     </insert>
     <select id="findUserProfile" resultType="ProfileForm">
-        select nickname, case when email=#{viewerEmail} then true else false end as isMyself, score as userScore
+        select profile_image, nickname, case when email=#{viewerEmail} then true else false end as isMyself, score as userScore
         from user
         <where>
             email=#{email}
@@ -24,4 +24,16 @@
         order by date desc
         limit 3;
     </select>
+    <update id="update">
+        update user set password=#{password}, nickname=#{nickname}, profile_image=#{profileImage}
+        <where>
+            email=#{email}
+        </where>
+    </update>
+    <update id="scoreUpdate">
+        update user set score=score+#{score}
+        <where>
+            email=#{email}
+        </where>
+    </update>
 </mapper>

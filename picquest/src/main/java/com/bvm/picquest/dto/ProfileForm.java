@@ -6,6 +6,7 @@ import java.util.List;
 
 @Data
 public class ProfileForm {
+    private String profileImage;
     private String nickname;
     private boolean isMyself;
     private Long userScore;

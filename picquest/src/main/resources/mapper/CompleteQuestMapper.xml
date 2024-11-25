@@ -9,11 +9,11 @@
     </select>
 
     <insert id="insert">
-        insert into complete_quest values (#{userEmail}, #{questId}, #{img}, #{score})
+        insert into complete_quest values (#{userEmail}, #{questId}, #{img}, #{title}, #{score})
     </insert>
 
     <update id="update">
-        update complete_quest set img=#{img}, score=#{score}
+        update complete_quest set img=#{img}, title=#{title}, score=#{score}
         <where>
             user_email=#{userEmail} AND quest_id=#{questId}
         </where>

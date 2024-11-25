@@ -1,16 +1,18 @@
 package com.bvm.picquest.controller;
 
-import com.bvm.picquest.dto.User;
-import com.bvm.picquest.dto.UserJoinForm;
-import com.bvm.picquest.dto.UserLoginForm;
+import com.bvm.picquest.dto.*;
 import com.bvm.picquest.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import jakarta.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 
 @CrossOrigin("*")
 @RestController
@@ -54,5 +56,11 @@ public class UserController {
     public ResponseEntity<?> viewProfile(@PathVariable String email, @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "이메일만 제대로 입력되면 됨") @RequestBody(required = false) User user) {
         String viewerEmail = user == null ? "" : user.getEmail();
         return ResponseEntity.ok(us.viewProfile(email, viewerEmail));
+    }
+
+    @Operation(summary = "프로필 수정")
+    @PostMapping(value = "/update", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<?> updateProfile(@RequestPart UserProfileUpdateForm form, @RequestPart MultipartFile image) throws IOException {
+        return us.updateProfile(form, image) == 1 ? ResponseEntity.ok("update complete!") : ResponseEntity.ok("update Failed");
     }
 }

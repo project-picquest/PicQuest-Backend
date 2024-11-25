@@ -3,10 +3,9 @@ package com.bvm.picquest.dto;
 import lombok.Data;
 
 @Data
-public class User {
+public class UserProfileUpdateForm {
     private String email;
     private String password;
     private String nickname;
-    private Long score;
     private String profileImage;
 }
