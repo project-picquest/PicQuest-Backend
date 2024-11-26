@@ -10,4 +10,5 @@ public class QuestTransferForm {
     private Long id;
     private String img;
     private boolean isCompleted;
+    private int idx;
 }

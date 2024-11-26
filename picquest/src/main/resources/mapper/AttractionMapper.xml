@@ -4,7 +4,7 @@
     <select id="findByTitle" resultType="Attraction">
         select * from attractions
         <where>
-            content_type_id not in (38, 39)
+            content_type_id not in (38, 39) and first_image1 != ''
             <if test="title != null">
                 and title like CONCAT("%", #{title}, "%")
             </if>
@@ -23,4 +23,7 @@
         from attractions a join (select * from additional_photo where attraction_no=#{no}) b
         on a.no = b.attraction_no
     </select>
+    <insert id="addAdditionalPhoto">
+        insert into additional_photo values (#{attractionNo}, #{img})
+    </insert>
 </mapper>

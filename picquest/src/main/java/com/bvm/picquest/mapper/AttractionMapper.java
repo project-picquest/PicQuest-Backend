@@ -1,5 +1,6 @@
 package com.bvm.picquest.mapper;
 
+import com.bvm.picquest.dto.AdditionalPhoto;
 import com.bvm.picquest.dto.Attraction;
 import com.bvm.picquest.dto.AttractionTransferForm;
 import org.apache.ibatis.annotations.Mapper;
@@ -11,4 +12,5 @@ public interface AttractionMapper {
     List<Attraction> findByTitle(String title, int offset);
     AttractionTransferForm findByNo(int no);
     List<String> findImgsByNo(int no);
+    int addAdditionalPhoto(AdditionalPhoto additionalPhotoInfo);
 }

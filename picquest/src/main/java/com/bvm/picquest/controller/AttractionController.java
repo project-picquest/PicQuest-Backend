@@ -4,8 +4,12 @@ import com.bvm.picquest.service.AttractionService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import lombok.AllArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 
 @CrossOrigin("*")
 @RestController
@@ -30,5 +34,10 @@ public class AttractionController {
     @GetMapping("/detail/{no}")
     public ResponseEntity<?> detailAttraction(@PathVariable int no) {
         return ResponseEntity.ok(as.attractionDetail(no));
+    }
+
+    @PostMapping(value = "/addPhoto", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<?> addAdditionalPhoto(@RequestPart Long attractionNo, @RequestPart MultipartFile image) throws IOException {
+        return as.addAdditionalPhoto(attractionNo, image) == 1 ? ResponseEntity.ok("Add Photo Complete!") : ResponseEntity.ok("Add Photo Failed");
     }
 }

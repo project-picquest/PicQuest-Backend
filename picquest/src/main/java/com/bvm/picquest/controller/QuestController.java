@@ -25,7 +25,6 @@ public class QuestController {
     @Operation(summary = "오늘의 퀘스트, 완료한 퀘스트는 isCompleted가 true로 전송")
     @PostMapping
     public ResponseEntity<?> todaysCompleteQuestList(@Parameter(description = "사용자 이메일(아이디)", required = false) @RequestBody User user) {
-        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!" + "user : " + user);
         if (user.getEmail() == null) {
             return ResponseEntity.ok(qs.todaysQuestList());
         } else {

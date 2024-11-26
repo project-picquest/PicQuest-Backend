@@ -8,7 +8,7 @@
         </where>
     </select>
     <select id="findQuestTransferFormByDate" resultType="QuestTransferForm">
-        select a.id, a.img, case when user_email is not null then true else false end as isCompleted
+        select a.id, a.img, case when user_email is not null then true else false end as isCompleted, row_number() over (order by a.id asc) as idx
         from (select * from quest where date=#{date}) a left join (select * from complete_quest where user_email=#{email}) b
         on a.id = b.quest_id
     </select>
