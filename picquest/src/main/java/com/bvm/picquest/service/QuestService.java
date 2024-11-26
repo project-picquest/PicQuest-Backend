@@ -52,7 +52,6 @@ public class QuestService {
 
     public String upsertImageLink(QuestSubmitForm form, MultipartFile image) throws IOException {
         String imgLink = uploadImageToS3(image);
-        System.out.println(imgLink);
         CompleteQuest completeQuestInfo = new CompleteQuest(form);
         completeQuestInfo.setImg(imgLink);
 

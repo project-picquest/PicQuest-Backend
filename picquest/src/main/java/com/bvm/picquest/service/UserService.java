@@ -32,7 +32,6 @@ public class UserService {
     // TODO: 시간 남으면 Exception 추가
     public User login(UserLoginForm form) {
         User loginUser = um.findByEmail(form.getEmail());
-        System.out.println(loginUser);
         if (loginUser.getPassword().equals(form.getPassword())) {
             return loginUser;
         } else {
